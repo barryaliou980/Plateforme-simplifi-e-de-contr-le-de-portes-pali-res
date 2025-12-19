@@ -154,6 +154,9 @@ Le modèle PROMELA fourni et vérifié avec SPIN permet d'obtenir des garanties 
 - Annexe A : le fichier `metro_portes.pml` contient le code PROMELA complet (déclarations, processus, fonction `attente`, LTL, ASSERT, commentaires).
 - Annexe B : commandes SPIN utilisées et exemples d'exécution (voir section 6).
 - Annexe C : glossaire et définitions.
+- Annexe D : Diagramme de Séquence UML
+
+![Diagramme de Séquence UML](./diagramme.png)
 
 ## Dépannage rapide
 
@@ -163,8 +166,5 @@ Le modèle PROMELA fourni et vérifié avec SPIN permet d'obtenir des garanties 
 
 - `metro_portes.pml` — code PROMELA final (exécutable dans SPIN)
 - `README.md` — ce fichier (mise à jour)
-- `run.sh` ou `Makefile` — script d'automatisation (optionnel)
-- `rapport.pdf` — rapport complet
-- `ltl/` — dossier contenant les formules LTL et explications
 
 ---
