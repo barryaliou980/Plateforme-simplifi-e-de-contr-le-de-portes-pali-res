@@ -1,0 +1,140 @@
+never propriete_a {    /* !([] ((! (train_aligned)) || (((portes_train_fermees) && (portes_palieres_fermees)) U ((train_stopped) && (train_aligned))))) */
+T0_init:
+	do
+	:: (! ((! (train_aligned))) && ! (((train_stopped) && (train_aligned)))) -> goto accept_S4
+	:: atomic { (! ((! (train_aligned))) && ! (((portes_train_fermees) && (portes_palieres_fermees))) && ! (((train_stopped) && (train_aligned)))) -> assert(!(! ((! (train_aligned))) && ! (((portes_train_fermees) && (portes_palieres_fermees))) && ! (((train_stopped) && (train_aligned))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! (((train_stopped) && (train_aligned)))) -> goto accept_S4
+	:: atomic { (! (((portes_train_fermees) && (portes_palieres_fermees))) && ! (((train_stopped) && (train_aligned)))) -> assert(!(! (((portes_train_fermees) && (portes_palieres_fermees))) && ! (((train_stopped) && (train_aligned))))) }
+	od;
+accept_all:
+	skip
+}
+never propriete_b_train {    /* !([] ((! ((! (portes_train_fermees)) && (! (portes_train_ouvertes)))) || (((lumiere_train==1)) U (portes_train_ouvertes)))) */
+T0_init:
+	do
+	:: (! ((! ((! (portes_train_fermees)) && (! (portes_train_ouvertes))))) && ! ((portes_train_ouvertes))) -> goto accept_S4
+	:: atomic { (! ((! ((! (portes_train_fermees)) && (! (portes_train_ouvertes))))) && ! (((lumiere_train==1))) && ! ((portes_train_ouvertes))) -> assert(!(! ((! ((! (portes_train_fermees)) && (! (portes_train_ouvertes))))) && ! (((lumiere_train==1))) && ! ((portes_train_ouvertes)))) }
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! ((portes_train_ouvertes))) -> goto accept_S4
+	:: atomic { (! (((lumiere_train==1))) && ! ((portes_train_ouvertes))) -> assert(!(! (((lumiere_train==1))) && ! ((portes_train_ouvertes)))) }
+	od;
+accept_all:
+	skip
+}
+never propriete_b_palieres {    /* !([] ((! ((! (portes_palieres_fermees)) && (! (portes_palieres_ouvertes)))) || (((lumiere_palieres==1)) U (portes_palieres_ouvertes)))) */
+T0_init:
+	do
+	:: (! ((! ((! (portes_palieres_fermees)) && (! (portes_palieres_ouvertes))))) && ! ((portes_palieres_ouvertes))) -> goto accept_S4
+	:: atomic { (! ((! ((! (portes_palieres_fermees)) && (! (portes_palieres_ouvertes))))) && ! (((lumiere_palieres==1))) && ! ((portes_palieres_ouvertes))) -> assert(!(! ((! ((! (portes_palieres_fermees)) && (! (portes_palieres_ouvertes))))) && ! (((lumiere_palieres==1))) && ! ((portes_palieres_ouvertes)))) }
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! ((portes_palieres_ouvertes))) -> goto accept_S4
+	:: atomic { (! (((lumiere_palieres==1))) && ! ((portes_palieres_ouvertes))) -> assert(!(! (((lumiere_palieres==1))) && ! ((portes_palieres_ouvertes)))) }
+	od;
+accept_all:
+	skip
+}
+never propriete_b_fermeture_train {    /* !([] ((! ((! (portes_train_ouvertes)) && (! (portes_train_fermees)))) || (((lumiere_train==1)) U (portes_train_fermees)))) */
+T0_init:
+	do
+	:: (! ((! ((! (portes_train_ouvertes)) && (! (portes_train_fermees))))) && ! ((portes_train_fermees))) -> goto accept_S4
+	:: atomic { (! ((! ((! (portes_train_ouvertes)) && (! (portes_train_fermees))))) && ! (((lumiere_train==1))) && ! ((portes_train_fermees))) -> assert(!(! ((! ((! (portes_train_ouvertes)) && (! (portes_train_fermees))))) && ! (((lumiere_train==1))) && ! ((portes_train_fermees)))) }
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! ((portes_train_fermees))) -> goto accept_S4
+	:: atomic { (! (((lumiere_train==1))) && ! ((portes_train_fermees))) -> assert(!(! (((lumiere_train==1))) && ! ((portes_train_fermees)))) }
+	od;
+accept_all:
+	skip
+}
+never propriete_b_fermeture_palieres {    /* !([] ((! ((! (portes_palieres_ouvertes)) && (! (portes_palieres_fermees)))) || (((lumiere_palieres==1)) U (portes_palieres_fermees)))) */
+T0_init:
+	do
+	:: (! ((! ((! (portes_palieres_ouvertes)) && (! (portes_palieres_fermees))))) && ! ((portes_palieres_fermees))) -> goto accept_S4
+	:: atomic { (! ((! ((! (portes_palieres_ouvertes)) && (! (portes_palieres_fermees))))) && ! (((lumiere_palieres==1))) && ! ((portes_palieres_fermees))) -> assert(!(! ((! ((! (portes_palieres_ouvertes)) && (! (portes_palieres_fermees))))) && ! (((lumiere_palieres==1))) && ! ((portes_palieres_fermees)))) }
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! ((portes_palieres_fermees))) -> goto accept_S4
+	:: atomic { (! (((lumiere_palieres==1))) && ! ((portes_palieres_fermees))) -> assert(!(! (((lumiere_palieres==1))) && ! ((portes_palieres_fermees)))) }
+	od;
+accept_all:
+	skip
+}
+never propriete_c {    /* !([] ((! ((train_stopped) && (train_aligned))) || (<> (portes_palieres_ouvertes)))) */
+T0_init:
+	do
+	:: (! ((! ((train_stopped) && (train_aligned)))) && ! ((portes_palieres_ouvertes))) -> goto accept_S4
+	:: (1) -> goto T0_init
+	od;
+accept_S4:
+	do
+	:: (! ((portes_palieres_ouvertes))) -> goto accept_S4
+	od;
+}
+never propriete_c_forte {    /* !([] ((! (portes_palieres_ouvertes)) || ((train_stopped) && (train_aligned)))) */
+T0_init:
+	do
+	:: atomic { (! (((! (portes_palieres_ouvertes)) || ((train_stopped) && (train_aligned))))) -> assert(!(! (((! (portes_palieres_ouvertes)) || ((train_stopped) && (train_aligned)))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never synchro_ouverture {    /* !([] ((! (portes_palieres_ouvertes)) || (portes_train_ouvertes))) */
+T0_init:
+	do
+	:: atomic { (! (((! (portes_palieres_ouvertes)) || (portes_train_ouvertes)))) -> assert(!(! (((! (portes_palieres_ouvertes)) || (portes_train_ouvertes))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never ordre_ouverture {    /* !([] ((! (portes_palieres_ouvertes)) || (portes_train_ouvertes))) */
+T0_init:
+	do
+	:: atomic { (! (((! (portes_palieres_ouvertes)) || (portes_train_ouvertes)))) -> assert(!(! (((! (portes_palieres_ouvertes)) || (portes_train_ouvertes))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never lumiere_verte_implique_ouvert {    /* !(([] ((! ((lumiere_train==2))) || (portes_train_ouvertes))) && ([] ((! ((lumiere_palieres==2))) || (portes_palieres_ouvertes)))) */
+T0_init:
+	do
+	:: atomic { (((! (((! ((lumiere_palieres==2))) || (portes_palieres_ouvertes)))) || (! (((! ((lumiere_train==2))) || (portes_train_ouvertes)))))) -> assert(!(((! (((! ((lumiere_palieres==2))) || (portes_palieres_ouvertes)))) || (! (((! ((lumiere_train==2))) || (portes_train_ouvertes))))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never lumiere_rouge_implique_ferme {    /* !(([] ((! ((lumiere_train==0))) || (portes_train_fermees))) && ([] ((! ((lumiere_palieres==0))) || (portes_palieres_fermees)))) */
+T0_init:
+	do
+	:: atomic { (((! (((! ((lumiere_palieres==0))) || (portes_palieres_fermees)))) || (! (((! ((lumiere_train==0))) || (portes_train_fermees)))))) -> assert(!(((! (((! ((lumiere_palieres==0))) || (portes_palieres_fermees)))) || (! (((! ((lumiere_train==0))) || (portes_train_fermees))))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}
+never securite_depart {    /* !([] ((! (! (train_stopped))) || ((portes_train_fermees) && (portes_palieres_fermees)))) */
+T0_init:
+	do
+	:: atomic { (! (((! (! (train_stopped))) || ((portes_train_fermees) && (portes_palieres_fermees))))) -> assert(!(! (((! (! (train_stopped))) || ((portes_train_fermees) && (portes_palieres_fermees)))))) }
+	:: (1) -> goto T0_init
+	od;
+accept_all:
+	skip
+}

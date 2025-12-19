@@ -1,0 +1,438 @@
+  0:	proc  - (:root:) creates proc  0 (:init:)
+ltl propriete_a: [] ((! (train_aligned)) || (((portes_train_fermees) && (portes_palieres_fermees)) U ((train_stopped) && (train_aligned))))
+ltl propriete_b_train: [] ((! ((! (portes_train_fermees)) && (! (portes_train_ouvertes)))) || (((lumiere_train==1)) U (portes_train_ouvertes)))
+ltl propriete_b_palieres: [] ((! ((! (portes_palieres_fermees)) && (! (portes_palieres_ouvertes)))) || (((lumiere_palieres==1)) U (portes_palieres_ouvertes)))
+ltl propriete_b_fermeture_train: [] ((! ((! (portes_train_ouvertes)) && (! (portes_train_fermees)))) || (((lumiere_train==1)) U (portes_train_fermees)))
+ltl propriete_b_fermeture_palieres: [] ((! ((! (portes_palieres_ouvertes)) && (! (portes_palieres_fermees)))) || (((lumiere_palieres==1)) U (portes_palieres_fermees)))
+ltl propriete_c: [] ((! ((train_stopped) && (train_aligned))) || (<> (portes_palieres_ouvertes)))
+ltl propriete_c_forte: [] ((! (portes_palieres_ouvertes)) || ((train_stopped) && (train_aligned)))
+ltl synchro_ouverture: [] ((! (portes_palieres_ouvertes)) || (portes_train_ouvertes))
+ltl ordre_ouverture: [] ((! (portes_palieres_ouvertes)) || (portes_train_ouvertes))
+ltl lumiere_verte_implique_ouvert: ([] ((! ((lumiere_train==2))) || (portes_train_ouvertes))) && ([] ((! ((lumiere_palieres==2))) || (portes_palieres_ouvertes)))
+ltl lumiere_rouge_implique_ferme: ([] ((! ((lumiere_train==0))) || (portes_train_fermees))) && ([] ((! ((lumiere_palieres==0))) || (portes_palieres_fermees)))
+ltl securite_depart: [] ((! (! (train_stopped))) || ((portes_train_fermees) && (portes_palieres_fermees)))
+      
+  1:	proc  0 (:init::1) metro_portes.pml:328 (state 1)	[printf('\\n')]
+      ========================================================
+  2:	proc  0 (:init::1) metro_portes.pml:329 (state 2)	[printf('========================================================\\n')]
+        SYSTÈME DE CONTRÔLE DE PORTES PALIÈRES - DÉMARRAGE
+  3:	proc  0 (:init::1) metro_portes.pml:330 (state 3)	[printf('  SYSTÈME DE CONTRÔLE DE PORTES PALIÈRES - DÉMARRAGE\\n')]
+      ========================================================
+  4:	proc  0 (:init::1) metro_portes.pml:331 (state 4)	[printf('========================================================\\n')]
+      
+  5:	proc  0 (:init::1) metro_portes.pml:332 (state 5)	[printf('\\n')]
+Starting SAET with pid 1
+  6:	proc  0 (:init::1) creates proc  1 (SAET)
+  6:	proc  0 (:init::1) metro_portes.pml:336 (state 6)	[(run SAET())]
+Starting DOF_Bord with pid 2
+  7:	proc  0 (:init::1) creates proc  2 (DOF_Bord)
+  7:	proc  0 (:init::1) metro_portes.pml:337 (state 7)	[(run DOF_Bord())]
+Starting DOF_Sol with pid 3
+  8:	proc  0 (:init::1) creates proc  3 (DOF_Sol)
+  8:	proc  0 (:init::1) metro_portes.pml:338 (state 8)	[(run DOF_Sol())]
+Starting Controleur_Portes_Train with pid 4
+  9:	proc  0 (:init::1) creates proc  4 (Controleur_Portes_Train)
+  9:	proc  0 (:init::1) metro_portes.pml:339 (state 9)	[(run Controleur_Portes_Train())]
+Starting Controleur_Portes_Palieres with pid 5
+ 10:	proc  0 (:init::1) creates proc  5 (Controleur_Portes_Palieres)
+ 10:	proc  0 (:init::1) metro_portes.pml:340 (state 10)	[(run Controleur_Portes_Palieres())]
+          
+[SAET] Train entre dans la zone d'approche
+ 11:	proc  1 (SAET:1) metro_portes.pml:97 (state 1)	[printf('\\n[SAET] Train entre dans la zone d'approche\\n')]
+ 12:	proc  1 (SAET:1) metro_portes.pml:100 (state 2)	[train_aligned = 1]
+		train_aligned = 1
+ 13:	proc  1 (SAET:1) metro_portes.pml:101 (state 3)	[train_stopped = 1]
+		train_stopped = 1
+          [SAET] Train aligné et arrêté dans la zone sécuritaire
+ 14:	proc  1 (SAET:1) metro_portes.pml:102 (state 4)	[printf('[SAET] Train aligné et arrêté dans la zone sécuritaire\\n')]
+          [SAET] Attente de stabilisation (3 secondes)...
+ 15:	proc  1 (SAET:1) metro_portes.pml:105 (state 5)	[printf('[SAET] Attente de stabilisation (3 secondes)...\\n')]
+ 16:	proc  1 (SAET:1) metro_portes.pml:77 (state 6)	[i = 3]
+		SAET(1):i = 3
+ 17:	proc  1 (SAET:1) metro_portes.pml:81 (state 12)	[.(goto)]
+ 18:	proc  1 (SAET:1) metro_portes.pml:78 (state 7)	[((i>0))]
+ 19:	proc  1 (SAET:1) metro_portes.pml:78 (state 8)	[i = (i-1)]
+		SAET(1):i = 2
+ 20:	proc  1 (SAET:1) metro_portes.pml:81 (state 12)	[.(goto)]
+ 21:	proc  1 (SAET:1) metro_portes.pml:78 (state 7)	[((i>0))]
+ 22:	proc  1 (SAET:1) metro_portes.pml:78 (state 8)	[i = (i-1)]
+		SAET(1):i = 1
+ 23:	proc  1 (SAET:1) metro_portes.pml:81 (state 12)	[.(goto)]
+ 24:	proc  1 (SAET:1) metro_portes.pml:78 (state 7)	[((i>0))]
+ 25:	proc  1 (SAET:1) metro_portes.pml:78 (state 8)	[i = (i-1)]
+		SAET(1):i = 0
+ 26:	proc  1 (SAET:1) metro_portes.pml:81 (state 12)	[.(goto)]
+ 27:	proc  1 (SAET:1) metro_portes.pml:79 (state 9)	[else]
+ 28:	proc  1 (SAET:1) metro_portes.pml:79 (state 10)	[goto :b0]
+          [SAET] Envoi de la commande OPEN_CMD
+ 29:	proc  1 (SAET:1) metro_portes.pml:109 (state 15)	[printf('[SAET] Envoi de la commande OPEN_CMD\\n')]
+ 30:	proc  1 (SAET:1) metro_portes.pml:110 (state 16)	[cmd_saet_to_bord!OPEN_CMD]
+ 30:	proc  2 (DOF_Bord:1) metro_portes.pml:137 (state 1)	[cmd_saet_to_bord?cmd]
+		DOF_Bord(2):cmd = OPEN_CMD
+              [DOF-Bord] Commande reçue du SAET : OPEN_CMD
+ 31:	proc  2 (DOF_Bord:1) metro_portes.pml:138 (state 2)	[printf('[DOF-Bord] Commande reçue du SAET : %e\\n',cmd)]
+              [DOF-Bord] Transmission de la commande au DOF-Sol
+ 32:	proc  2 (DOF_Bord:1) metro_portes.pml:141 (state 3)	[printf('[DOF-Bord] Transmission de la commande au DOF-Sol\\n')]
+          [SAET] Attente du signal DEPART_OK...
+ 33:	proc  1 (SAET:1) metro_portes.pml:113 (state 17)	[printf('[SAET] Attente du signal DEPART_OK...\\n')]
+ 34:	proc  2 (DOF_Bord:1) metro_portes.pml:142 (state 4)	[cmd_bord_to_sol!cmd]
+ 34:	proc  3 (DOF_Sol:1) metro_portes.pml:167 (state 1)	[cmd_bord_to_sol?cmd]
+		queue 3 (signal_depart): 
+		DOF_Sol(3):cmd = OPEN_CMD
+ 35:	proc  3 (DOF_Sol:1) metro_portes.pml:168 (state 2)	[assert((cmd==OPEN_CMD))]
+		queue 3 (signal_depart): 
+                  [DOF-Sol] Commande OPEN_CMD reçue
+ 36:	proc  3 (DOF_Sol:1) metro_portes.pml:169 (state 3)	[printf('[DOF-Sol] Commande OPEN_CMD reçue\\n')]
+		queue 3 (signal_depart): 
+ 37:	proc  3 (DOF_Sol:1) metro_portes.pml:173 (state 4)	[assert((train_aligned&&train_stopped))]
+		queue 3 (signal_depart): 
+ 38:	proc  3 (DOF_Sol:1) metro_portes.pml:174 (state 5)	[assert((portes_train_fermees&&portes_palieres_fermees))]
+		queue 3 (signal_depart): 
+                  [DOF-Sol] Vérifications de sécurité : OK
+ 39:	proc  3 (DOF_Sol:1) metro_portes.pml:175 (state 6)	[printf('[DOF-Sol] Vérifications de sécurité : OK\\n')]
+		queue 3 (signal_depart): 
+                  [DOF-Sol]   - Train aligné : 1
+ 40:	proc  3 (DOF_Sol:1) metro_portes.pml:176 (state 7)	[printf('[DOF-Sol]   - Train aligné : %d\\n',train_aligned)]
+		queue 3 (signal_depart): 
+                  [DOF-Sol]   - Train arrêté : 1
+ 41:	proc  3 (DOF_Sol:1) metro_portes.pml:177 (state 8)	[printf('[DOF-Sol]   - Train arrêté : %d\\n',train_stopped)]
+		queue 3 (signal_depart): 
+                  [DOF-Sol]   - Portes fermées : 1
+ 42:	proc  3 (DOF_Sol:1) metro_portes.pml:178 (state 9)	[printf('[DOF-Sol]   - Portes fermées : %d\\n',(portes_train_fermees&&portes_palieres_fermees))]
+		queue 3 (signal_depart): 
+ 43:	proc  3 (DOF_Sol:1) metro_portes.pml:182 (state 10)	[ack_sol_to_bord!ACK]
+ 43:	proc  2 (DOF_Bord:1) metro_portes.pml:145 (state 5)	[ack_sol_to_bord?ACK]
+		queue 3 (signal_depart): 
+                  [DOF-Sol] Accusé de réception envoyé
+ 44:	proc  3 (DOF_Sol:1) metro_portes.pml:183 (state 11)	[printf('[DOF-Sol] Accusé de réception envoyé\\n')]
+		queue 3 (signal_depart): 
+              [DOF-Bord] Accusé de réception reçu du DOF-Sol
+ 45:	proc  2 (DOF_Bord:1) metro_portes.pml:146 (state 6)	[printf('[DOF-Bord] Accusé de réception reçu du DOF-Sol\\n')]
+		queue 3 (signal_depart): 
+                  
+[DOF-Sol] === DÉBUT OUVERTURE PORTES TRAIN ===
+ 46:	proc  3 (DOF_Sol:1) metro_portes.pml:186 (state 12)	[printf('\\n[DOF-Sol] === DÉBUT OUVERTURE PORTES TRAIN ===\\n')]
+		queue 3 (signal_depart): 
+ 47:	proc  3 (DOF_Sol:1) metro_portes.pml:187 (state 13)	[lumiere_train = 1]
+		lumiere_train = 1
+		queue 3 (signal_depart): 
+ 48:	proc  3 (DOF_Sol:1) metro_portes.pml:188 (state 14)	[portes_train_fermees = 0]
+		portes_train_fermees = 0
+		queue 3 (signal_depart): 
+ 49:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:292 (state 14)	[((((lumiere_train==1)&&!(portes_train_ouvertes))&&!(portes_train_fermees)))]
+		queue 3 (signal_depart): 
+                        [Ctrl-Train] Détection : Portes en fermeture...
+ 50:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:294 (state 15)	[printf('  [Ctrl-Train] Détection : Portes en fermeture...\\n')]
+		queue 3 (signal_depart): 
+ 51:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:77 (state 16)	[i = 2]
+		queue 3 (signal_depart): 
+		Controleur_Portes_Train(4):i = 2
+ 52:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:81 (state 22)	[.(goto)]
+		queue 3 (signal_depart): 
+ 53:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:78 (state 17)	[((i>0))]
+		queue 3 (signal_depart): 
+ 54:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:78 (state 18)	[i = (i-1)]
+		queue 3 (signal_depart): 
+		Controleur_Portes_Train(4):i = 1
+ 55:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:81 (state 22)	[.(goto)]
+		queue 3 (signal_depart): 
+                  [DOF-Sol] Indicateur JAUNE activé pour portes train
+ 56:	proc  3 (DOF_Sol:1) metro_portes.pml:189 (state 15)	[printf('[DOF-Sol] Indicateur JAUNE activé pour portes train\\n')]
+		queue 3 (signal_depart): 
+                  [DOF-Sol] Commande d'ouverture envoyée aux portes train
+ 57:	proc  3 (DOF_Sol:1) metro_portes.pml:190 (state 16)	[printf('[DOF-Sol] Commande d'ouverture envoyée aux portes train\\n')]
+		queue 3 (signal_depart): 
+ 58:	proc  3 (DOF_Sol:1) metro_portes.pml:77 (state 17)	[i = 2]
+		queue 3 (signal_depart): 
+		DOF_Sol(3):i = 2
+ 59:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:78 (state 17)	[((i>0))]
+		queue 3 (signal_depart): 
+ 60:	proc  3 (DOF_Sol:1) metro_portes.pml:81 (state 23)	[.(goto)]
+		queue 3 (signal_depart): 
+ 61:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:78 (state 18)	[i = (i-1)]
+		queue 3 (signal_depart): 
+		Controleur_Portes_Train(4):i = 0
+ 62:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:81 (state 22)	[.(goto)]
+		queue 3 (signal_depart): 
+ 63:	proc  3 (DOF_Sol:1) metro_portes.pml:78 (state 18)	[((i>0))]
+		queue 3 (signal_depart): 
+ 64:	proc  3 (DOF_Sol:1) metro_portes.pml:78 (state 19)	[i = (i-1)]
+		queue 3 (signal_depart): 
+		DOF_Sol(3):i = 1
+ 65:	proc  3 (DOF_Sol:1) metro_portes.pml:81 (state 23)	[.(goto)]
+		queue 3 (signal_depart): 
+ 66:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:79 (state 19)	[else]
+		queue 3 (signal_depart): 
+ 67:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:79 (state 20)	[goto :b8]
+		queue 3 (signal_depart): 
+                        [Ctrl-Train] Fermeture complète détectée
+ 68:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:296 (state 25)	[printf('  [Ctrl-Train] Fermeture complète détectée\\n')]
+		queue 3 (signal_depart): 
+ 69:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:297 (state 26)	[status_portes_train!CLOSE_CONFIRMED]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 70:	proc  3 (DOF_Sol:1) metro_portes.pml:78 (state 18)	[((i>0))]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 71:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:299 (state 28)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 72:	proc  3 (DOF_Sol:1) metro_portes.pml:78 (state 19)	[i = (i-1)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+		DOF_Sol(3):i = 0
+ 73:	proc  3 (DOF_Sol:1) metro_portes.pml:81 (state 23)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 74:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:292 (state 14)	[((((lumiere_train==1)&&!(portes_train_ouvertes))&&!(portes_train_fermees)))]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 75:	proc  3 (DOF_Sol:1) metro_portes.pml:79 (state 20)	[else]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+                        [Ctrl-Train] Détection : Portes en fermeture...
+ 76:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:294 (state 15)	[printf('  [Ctrl-Train] Détection : Portes en fermeture...\\n')]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 77:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:77 (state 16)	[i = 2]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+		Controleur_Portes_Train(4):i = 2
+ 78:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:81 (state 22)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 79:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:78 (state 17)	[((i>0))]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 80:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:78 (state 18)	[i = (i-1)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+		Controleur_Portes_Train(4):i = 1
+ 81:	proc  3 (DOF_Sol:1) metro_portes.pml:79 (state 21)	[goto :b1]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+                  
+[DOF-Sol] === DÉBUT OUVERTURE PORTES PALIÈRES ===
+ 82:	proc  3 (DOF_Sol:1) metro_portes.pml:197 (state 26)	[printf('\\n[DOF-Sol] === DÉBUT OUVERTURE PORTES PALIÈRES ===\\n')]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 83:	proc  3 (DOF_Sol:1) metro_portes.pml:198 (state 27)	[lumiere_palieres = 1]
+		lumiere_palieres = 1
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 84:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:81 (state 22)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 85:	proc  3 (DOF_Sol:1) metro_portes.pml:199 (state 28)	[portes_palieres_fermees = 0]
+		portes_palieres_fermees = 0
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 86:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:309 (state 1)	[((((lumiere_palieres==1)&&!(portes_palieres_fermees))&&!(portes_palieres_ouvertes)))]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+                            [Ctrl-Palières] Détection : Portes en ouverture...
+ 87:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:311 (state 2)	[printf('  [Ctrl-Palières] Détection : Portes en ouverture...\\n')]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 88:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:78 (state 17)	[((i>0))]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+                  [DOF-Sol] Indicateur JAUNE activé pour portes palières
+ 89:	proc  3 (DOF_Sol:1) metro_portes.pml:200 (state 29)	[printf('[DOF-Sol] Indicateur JAUNE activé pour portes palières\\n')]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 90:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:78 (state 18)	[i = (i-1)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+		Controleur_Portes_Train(4):i = 0
+ 91:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:77 (state 3)	[i = 2]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+		Controleur_Portes_Palieres(5):i = 2
+ 92:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:81 (state 22)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 93:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:81 (state 9)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 94:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:78 (state 4)	[((i>0))]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 95:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:79 (state 19)	[else]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+                  [DOF-Sol] Commande d'ouverture envoyée aux portes palières
+ 96:	proc  3 (DOF_Sol:1) metro_portes.pml:201 (state 30)	[printf('[DOF-Sol] Commande d'ouverture envoyée aux portes palières\\n')]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 97:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:79 (state 20)	[goto :b8]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+ 98:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:78 (state 5)	[i = (i-1)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+		Controleur_Portes_Palieres(5):i = 1
+ 99:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:81 (state 9)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+                        [Ctrl-Train] Fermeture complète détectée
+100:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:296 (state 25)	[printf('  [Ctrl-Train] Fermeture complète détectée\\n')]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+101:	proc  3 (DOF_Sol:1) metro_portes.pml:77 (state 31)	[i = 2]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+		DOF_Sol(3):i = 2
+102:	proc  3 (DOF_Sol:1) metro_portes.pml:81 (state 37)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+103:	proc  3 (DOF_Sol:1) metro_portes.pml:78 (state 32)	[((i>0))]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+104:	proc  3 (DOF_Sol:1) metro_portes.pml:78 (state 33)	[i = (i-1)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+		DOF_Sol(3):i = 1
+105:	proc  3 (DOF_Sol:1) metro_portes.pml:81 (state 37)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+106:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:78 (state 4)	[((i>0))]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+107:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:78 (state 5)	[i = (i-1)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+		Controleur_Portes_Palieres(5):i = 0
+108:	proc  3 (DOF_Sol:1) metro_portes.pml:78 (state 32)	[((i>0))]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+109:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:81 (state 9)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+110:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:79 (state 6)	[else]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+111:	proc  3 (DOF_Sol:1) metro_portes.pml:78 (state 33)	[i = (i-1)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+		DOF_Sol(3):i = 0
+112:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:79 (state 7)	[goto :b10]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+113:	proc  3 (DOF_Sol:1) metro_portes.pml:81 (state 37)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+                            [Ctrl-Palières] Ouverture complète détectée
+114:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:313 (state 12)	[printf('  [Ctrl-Palières] Ouverture complète détectée\\n')]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+115:	proc  3 (DOF_Sol:1) metro_portes.pml:79 (state 34)	[else]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 3 (signal_depart): 
+116:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:314 (state 13)	[status_portes_palieres!OPEN_CONFIRMED]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+117:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:323 (state 28)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+118:	proc  3 (DOF_Sol:1) metro_portes.pml:79 (state 35)	[goto :b2]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+119:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:309 (state 1)	[((((lumiere_palieres==1)&&!(portes_palieres_fermees))&&!(portes_palieres_ouvertes)))]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+                            [Ctrl-Palières] Détection : Portes en ouverture...
+120:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:311 (state 2)	[printf('  [Ctrl-Palières] Détection : Portes en ouverture...\\n')]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+                  
+[DOF-Sol] Attente des confirmations d'ouverture...
+121:	proc  3 (DOF_Sol:1) metro_portes.pml:207 (state 40)	[printf('\\n[DOF-Sol] Attente des confirmations d'ouverture...\\n')]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+122:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:77 (state 3)	[i = 2]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+		Controleur_Portes_Palieres(5):i = 2
+123:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:81 (state 9)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+124:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:78 (state 4)	[((i>0))]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+125:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:78 (state 5)	[i = (i-1)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+		Controleur_Portes_Palieres(5):i = 1
+126:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:81 (state 9)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+127:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:78 (state 4)	[((i>0))]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+128:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:78 (state 5)	[i = (i-1)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+		Controleur_Portes_Palieres(5):i = 0
+129:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:81 (state 9)	[.(goto)]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+130:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:79 (state 6)	[else]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+131:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:79 (state 7)	[goto :b10]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+                            [Ctrl-Palières] Ouverture complète détectée
+132:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:313 (state 12)	[printf('  [Ctrl-Palières] Ouverture complète détectée\\n')]
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+      timeout
+#processes: 6
+		train_aligned = 1
+		train_stopped = 1
+		portes_train_ouvertes = 0
+		portes_train_fermees = 0
+		portes_palieres_ouvertes = 0
+		portes_palieres_fermees = 0
+		lumiere_train = 1
+		lumiere_palieres = 1
+		queue 5 (status_portes_train): [CLOSE_CONFIRMED]
+		queue 6 (status_portes_palieres): [OPEN_CONFIRMED]
+		queue 3 (signal_depart): 
+132:	proc  5 (Controleur_Portes_Palieres:1) metro_portes.pml:314 (state 13)
+		Controleur_Portes_Palieres(5):i = 0
+		Controleur_Portes_Palieres(5):i = 0
+132:	proc  4 (Controleur_Portes_Train:1) metro_portes.pml:297 (state 26)
+		Controleur_Portes_Train(4):i = 0
+		Controleur_Portes_Train(4):i = 0
+132:	proc  3 (DOF_Sol:1) metro_portes.pml:209 (state 41)
+		DOF_Sol(3):i = 0
+		DOF_Sol(3):i = 0
+		DOF_Sol(3):i = 0
+		DOF_Sol(3):i = 0
+		DOF_Sol(3):i = 0
+		DOF_Sol(3):cmd = OPEN_CMD
+132:	proc  2 (DOF_Bord:1) metro_portes.pml:147 (state 7) <valid end state>
+		DOF_Bord(2):cmd = OPEN_CMD
+132:	proc  1 (SAET:1) metro_portes.pml:114 (state 18)
+		SAET(1):i = 0
+132:	proc  0 (:init::1) metro_portes.pml:344 (state 12)
+6 processes created
